@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import Button from "@/components/button";
 
 export const Route = createFileRoute("/$building/$floor")({
@@ -6,10 +6,13 @@ export const Route = createFileRoute("/$building/$floor")({
 });
 
 function RouteComponent() {
+  const {building, floor} = useParams({ from: "/$building/$floor" });
   return (
     <>
-      <Button index={1} />
       <div>Hello "/$building/$floor"!</div>
+      <div>Building: {building}</div>
+      <div>Floor: {floor}</div>
+      <Button index={1} />
     </>
   );
 }

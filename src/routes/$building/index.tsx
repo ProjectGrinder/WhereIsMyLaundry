@@ -1,9 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useParams } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/$building/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  return <div>Hello "/$building/"!</div>
+  const {building} = useParams({ from: "/$building/" });
+  return (
+    <>
+    <div>Hello "/$building"!</div>
+    <div>Building: {building}</div>
+    </>
+  );
 }
