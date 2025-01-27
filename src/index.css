@@ -1,7 +1,7 @@
 @layer reset,
 base,
 tokens,
-recipes
+recipes,
 utilities,
 theme;
 @import "modern-normalize" layer(reset);
