@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./__root.css";
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import getBuilding from "@/api/getBuilding";
-import { useNavigate } from "@tanstack/react-router";
+import getBuildingData from "@/api/getBuildingData";
+import Navigation from "@/components/navigation";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -10,17 +10,14 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   // Hooks should be declared at the top level
-  const [buildingNames, setBuildingNames] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedBuilding, setSelectedBuilding] = useState("");
-
-  const navigate = useNavigate();
+  const [buildings, setBuildings] = useState<BuildingData[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const loadBuildings = async () => {
       try {
-        const data = await getBuilding();
-        setBuildingNames(data);
+        const data = await getBuildingData();
+        setBuildings(data);
       } catch (error) {
         console.error("Failed to fetch building names:", error);
       } finally {
@@ -30,12 +27,6 @@ function RootComponent() {
 
     loadBuildings();
   }, []);
-
-  const handleNavigate = () => {
-    if (selectedBuilding) {
-      navigate({ to: `/${selectedBuilding}` });
-    }
-  };
 
   // Return loading state **after** all hooks have been declared
   if (loading) {
@@ -51,20 +42,7 @@ function RootComponent() {
   return (
     <>
       <div>Hello "__root"!</div>
-      <select onChange={(e) => setSelectedBuilding(e.target.value)} defaultValue="">
-        <option value="" disabled hidden>
-          - Select Building -
-        </option>
-        {buildingNames.map((name, index) => (
-          <option key={index + 1} value={name}>
-            {name}
-          </option>
-        ))}
-      </select>
-      <button onClick={handleNavigate} disabled={!selectedBuilding}>
-        Go
-      </button>
-      <Outlet />
+      <Navigation buildings={buildings}></Navigation>
     </>
   );
 }
