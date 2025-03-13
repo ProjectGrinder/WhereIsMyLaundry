@@ -12,26 +12,12 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as BuildingIndexImport } from './routes/$building/index'
-import { Route as BuildingFloorImport } from './routes/$building/$floor'
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const BuildingIndexRoute = BuildingIndexImport.update({
-  id: '/$building/',
-  path: '/$building/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const BuildingFloorRoute = BuildingFloorImport.update({
-  id: '/$building/$floor',
-  path: '/$building/$floor',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -46,20 +32,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/$building/$floor': {
-      id: '/$building/$floor'
-      path: '/$building/$floor'
-      fullPath: '/$building/$floor'
-      preLoaderRoute: typeof BuildingFloorImport
-      parentRoute: typeof rootRoute
-    }
-    '/$building/': {
-      id: '/$building/'
-      path: '/$building'
-      fullPath: '/$building'
-      preLoaderRoute: typeof BuildingIndexImport
-      parentRoute: typeof rootRoute
-    }
   }
 }
 
@@ -67,42 +39,32 @@ declare module '@tanstack/react-router' {
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$building/$floor': typeof BuildingFloorRoute
-  '/$building': typeof BuildingIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$building/$floor': typeof BuildingFloorRoute
-  '/$building': typeof BuildingIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/$building/$floor': typeof BuildingFloorRoute
-  '/$building/': typeof BuildingIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$building/$floor' | '/$building'
+  fullPaths: '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$building/$floor' | '/$building'
-  id: '__root__' | '/' | '/$building/$floor' | '/$building/'
+  to: '/'
+  id: '__root__' | '/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  BuildingFloorRoute: typeof BuildingFloorRoute
-  BuildingIndexRoute: typeof BuildingIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  BuildingFloorRoute: BuildingFloorRoute,
-  BuildingIndexRoute: BuildingIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -115,19 +77,11 @@ export const routeTree = rootRoute
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/$building/$floor",
-        "/$building/"
+        "/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/$building/$floor": {
-      "filePath": "$building/$floor.tsx"
-    },
-    "/$building/": {
-      "filePath": "$building/index.tsx"
     }
   }
 }

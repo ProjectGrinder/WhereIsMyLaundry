@@ -41,7 +41,10 @@ function RootComponent() {
 
   return (
     <>
-      <div>Hello "__root"!</div>
+      <div id="topbar">
+        <div>ระบบจัดการสถานะเครื่องซักผ้า</div>
+        <div>หอพักนิสิตจุฬาฯ</div>
+      </div>
       <Navigation buildings={buildings}></Navigation>
     </>
   );

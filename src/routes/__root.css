@@ -3,15 +3,16 @@
 }
 
 :root {
-  --page-background: var(--color-gray-900);
-  --color-fg: var(--color-gray-200);
+  --page-background: var(--color-gray-200);
+  --color-fg: var(--color-gray-900);
   --color-primary: var(--color-blue-500);
   --color-active: var(--color-pink-500);
   --color-muted: hsl(var(--hsl-gray-200) / 10%);
-  --main-content-bg: var(--color-gray-900);
+  --main-content-bg: var(--color-gray-200);
   --main-content-box-shadow: hsl(var(--hsl-gray-50) / 0.14) 0px 0px 0px 1px;
   --outline-active-fg: var(--color-fg);
   --outline-default-fg: var(--color-gray-500);
+  --topbar-background: var(--color-blue-500);
 }
 
 html {
@@ -29,4 +30,17 @@ li {
 
 .main-content {
   margin-top: 104px;
+}
+
+#topbar {
+  margin: 0px auto;
+  padding: 15px;
+  width: 100%;
+  background: var(--color-primary);
+  text-align: center;
+}
+
+#navigation > div {
+  text-align: center;
+  padding: 5px;
 }
