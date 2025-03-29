@@ -36,7 +36,12 @@ export default function Navigation({buildings}: Props) {
                 ></SearchDropdown>}
             </div>
             <div>
-                {currFloor && <><Button index={1}/><Button index={2}/></>}
+                {currFloor && 
+                <>
+                    <Button index={1} building={building} floor={floor}/>
+                    <Button index={2} building={building} floor={floor}/>
+                </>
+                }
             </div>
         </div>
     )

@@ -2,10 +2,11 @@ import MockBuildingData from "@/mocks/building";
 
 export default async function updateLaundry(
   buttonIndex: number,
+  building: string,
+  floor: string,
 ): Promise<BuildingResponse> {
   // TODO: UpdateButtonDataOnDatabase
   //...
-  const [, building, floor] = document.location.pathname.split("/");
   const floor_index = parseInt(floor) - 1;
 
   const building_data = MockBuildingData.find(

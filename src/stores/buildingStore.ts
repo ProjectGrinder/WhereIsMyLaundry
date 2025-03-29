@@ -5,15 +5,15 @@ interface BuildingState {
   status: "ready" | "loading" | "error";
   data?: BuildingData;
   err?: string;
-  updateLaundry: (index: number) => Promise<void>;
+  updateLaundry: (index: number, building: string, floor: string) => Promise<void>;
   getBuldingData: () => Promise<void>;
 }
 
 const useBuildingStore = create<BuildingState>()((set) => ({
   status: "ready",
-  updateLaundry: async (index: number) => {
+  updateLaundry: async (index: number, building: string, floor: string) => {
     set({ status: "loading" });
-    await updateLaundry(index);
+    await updateLaundry(index, building, floor);
     set({ status: "ready" });
   },
   getBuldingData: async () => {
