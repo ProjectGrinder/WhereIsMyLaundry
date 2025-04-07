@@ -4,7 +4,7 @@ export enum LaundryStatus {
 }
 const MockBuildingData: Array<BuildingData> = [
   {
-    building_id: 1,
+    building_id: "1",
     building_name: "chuanchom",
     floors: [
       {

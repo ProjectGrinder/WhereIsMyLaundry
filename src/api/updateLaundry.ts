@@ -1,42 +1,28 @@
-import MockBuildingData from "@/mocks/building";
+import { db } from "./firebase";
+import { doc, updateDoc } from "firebase/firestore";
 
 export default async function updateLaundry(
   buttonIndex: number,
   building: string,
   floor: string,
+  state: number,
 ): Promise<BuildingResponse> {
-  // TODO: UpdateButtonDataOnDatabase
-  //...
-  const floor_index = parseInt(floor) - 1;
+  const key = `laundry${buttonIndex}`;
+  const docRef = doc(db, "building", building, "floors", floor);
 
-  const building_data = MockBuildingData.find(
-    (value) => value.building_name == building,
-  );
-
-  if (building_data == undefined)
+  try {
+    await updateDoc(docRef, {
+      [key]: state === 0 ? 1 : 0,
+    });
     return {
-      success: false,
-      err_msg: "Incorrect Parameter: Building is not exist.",
+      success: true,
+      err_msg: "",
     };
-
-  if (floor_index >= building_data.floors.length || floor_index < 0)
+  } catch (e) {
+    console.error(e);
     return {
       success: false,
-      err_msg: "Incorrect Parameter: Index out of range.",
-    };
-
-  if (building_data.floors[floor_index][`laundry${buttonIndex}`]) {
-    return {
-      success: false,
-      err_msg: "Incorrect Parameter: Laundry machine is not exist.",
+      err_msg: "cannot update state",
     };
   }
-
-  building_data.floors[floor_index][`laundry${buttonIndex}`] =
-    (building_data.floors[floor_index][`laundry${buttonIndex}`] + 1) % 2;
-
-  return {
-    success: true,
-    err_msg: "",
-  };
 }

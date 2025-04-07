@@ -7,7 +7,7 @@ declare global {
   }
 
   export interface BuildingData {
-    building_id: number;
+    building_id: string;
     building_name: string;
     floors: Array<FloorData>;
   }

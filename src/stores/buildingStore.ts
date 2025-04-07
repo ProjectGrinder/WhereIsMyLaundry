@@ -1,23 +1,36 @@
+import getBuildingData from "@/api/getBuildingData";
 import updateLaundry from "@/api/updateLaundry";
 import { create } from "zustand";
 
 interface BuildingState {
   status: "ready" | "loading" | "error";
-  data?: BuildingData;
+  data?: BuildingData[];
   err?: string;
-  updateLaundry: (index: number, building: string, floor: string) => Promise<void>;
+  updateLaundry: (
+    index: number,
+    building: string,
+    floor: string,
+    state: number,
+  ) => Promise<void>;
   getBuldingData: () => Promise<void>;
 }
 
 const useBuildingStore = create<BuildingState>()((set) => ({
-  status: "ready",
-  updateLaundry: async (index: number, building: string, floor: string) => {
+  status: "loading",
+  updateLaundry: async (
+    index: number,
+    building: string,
+    floor: string,
+    state: number,
+  ) => {
     set({ status: "loading" });
-    await updateLaundry(index, building, floor);
+    await updateLaundry(index, building, floor, state);
+    set({ data: await getBuildingData() });
     set({ status: "ready" });
   },
   getBuldingData: async () => {
     set({ status: "loading" });
+    set({ data: await getBuildingData() });
     set({ status: "ready" });
   },
 }));
